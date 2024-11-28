@@ -1,0 +1,35 @@
+name: Kilmainham Gaol Tour Availability Checker
+
+on:
+  schedule:
+    # Run daily at 3 PM UTC
+    - cron: '0 15 * * *'
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    # Allow manual triggering
+
+jobs:
+  check-availability:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.9'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests beautifulsoup4 python-telegram-bot
+    
+    - name: Run Availability Checker
+      env:
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      run: python kilmainham_availability_checker.py
