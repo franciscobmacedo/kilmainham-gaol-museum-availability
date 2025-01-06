@@ -1,9 +1,9 @@
 name: Kilmainham Gaol Tour Availability Checker
 
 on:
-  schedule:
-    # Run daily at 3 PM UTC
-    - cron: '0 15 * * *'
+  # Enable this schedule to run daily at 3 PM UTC
+  # schedule:
+    # - cron: '0 15 * * *'
   push:
     branches:
       - main
